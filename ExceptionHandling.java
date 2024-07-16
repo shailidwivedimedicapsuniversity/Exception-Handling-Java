@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class ExceptionHandling{
@@ -5,6 +6,11 @@ public class ExceptionHandling{
         System.out.println(12);
         try{
             FileReader f = new FileReader("a.txt");
+            BufferedReader bf = new BufferedReader(f);
+            String line;
+            while((line = bf.readLine()) != null){
+                System.out.println(line);
+            }
         }catch(Exception e){
             System.out.println("file not found and this exception occurs : " + e.getLocalizedMessage());
         }
@@ -30,11 +36,23 @@ public class ExceptionHandling{
             System.out.println("your exception: " + e);
         }
 
-        // multicatch block java 7
+        // multicatch block java 7, best practice readable 
         try {
             System.out.println(arr[10]);
         }catch(ArithmeticException | ArrayIndexOutOfBoundsException | NullPointerException e ){
-            System.out.println("Arithmetic exception: "+ e);
+            System.out.println("exception: "+ e);
+        }
+
+        // try with resources - in try block file will autoclose 
+        try( FileReader f = new FileReader("a.txt");
+        BufferedReader bf = new BufferedReader(f); )
+        {      
+            String line;
+            while((line = bf.readLine()) != null){
+                System.out.println(line);
+            }
+        }catch(Exception e){
+            System.out.println("file not found and this exception occurs : " + e.getLocalizedMessage());
         }
 
 
